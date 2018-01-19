@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html ng-app="myApplication">
+<head>
+	<title>{{ title }}</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
+	<script src="js/app.js"></script>
+</head>
+<body ng-controller="myCtrl">
+	<h1>{{ title }}</h1>
+
+	<table border="1">
+		<tr>
+			<td>ID</td>
+			<td><input type="number" name="id" ng-model="data.new.id"></td>
+		</tr>
+		<tr>
+			<td>Firstname</td>
+			<td><input type="text" name="firstname" ng-model="data.new.firstname"></td>
+		</tr>
+		<tr>
+			<td>Lastname</td>
+			<td><input type="text" name="lastname" ng-model="data.new.lastname"></td>
+		</tr>
+		<tr>
+			<td>Email</td>
+			<td><input type="text" name="email" ng-model="data.new.email"></td>
+		</tr>
+		<tr>
+			<td><input type="button" name="edit" value="Update"></td>
+			<td><input type="button" name="save" value="Add" ng-click="save()"></td>
+		</tr>
+	</table>
+
+	<table border="1">
+		<thead>
+			<tr>
+				<td>#</td>
+				<td>Firstname</td>
+				<td>Lastname</td>
+				<td>Email</td>
+				<td>Action</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="user in users">
+				<td>{{ user.id }}</td>
+				<td>{{ user.firstname }}</td>
+				<td>{{ user.lastname }}</td>
+				<td>{{ user.email }}</td>
+				<td><input type="button" name="edit" value="Update"> - <input type="button" name="save" value="Delete" ng-click="delete(user.id)"></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
