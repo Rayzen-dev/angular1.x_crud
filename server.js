@@ -4,25 +4,51 @@ var express = require('express'),
 	path = require('path'),
 	app = express();
 
-var users = [{id: 1, firstname: "John", lastname: "Doe", email: "john.doe@exemple.com"}];
+var users = [
+/*
+	{
+		id: 1,
+		firstname: "John",
+		lastname: "Doe",
+		email: "johndoe@exemple.com"
+	},
+	{
+		id: 2,
+		firstname: "Jane",
+		lastname: "Doe",
+		email: "janedoe@exemple.com"
+	}
+*/
+];
 
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-
+//	Init route for user's API
 app.get('/api', (req, res) => {
 	res.json(users);
 });
 
+//	Store new user to API
 app.post('/api', (req, res, next) => {
 	users.push(req.body);
 	res.end();
 })
 
+//	Update specific user from API
+app.put('/api', (req, res, next) => {
 
+	res.end();
+});
 
-app.get('/', (req, res) => {
-	res.send('Lol');
+//	Delete user from API
+app.delete('/api/:userId', (req, res, next) => {
+	var obj = users.find(function (obj) { return obj.id === parseInt(req.params.userId) });
+	var index = users.indexOf(obj);
+	users.splice(index, 1);
+	res.end();
 })
 
 http.createServer(app).listen(3000, function () {
