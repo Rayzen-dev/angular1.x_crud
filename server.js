@@ -31,26 +31,31 @@ app.get('/api', (req, res) => {
 	res.json(users);
 });
 
+
 //	Store new user to API
 app.post('/api', (req, res, next) => {
 	users.push(req.body);
 	res.end();
 })
 
-//	Update specific user from API
-app.put('/api', (req, res, next) => {
 
+//	Update specific user from API
+app.put('/api/:userId', (req, res, next) => {
+	var obj = users.find(function (obj) { return obj.id === parseInt(req.params.userId) });
+	users[users.indexOf(obj)] = req.body.data;
 	res.end();
 });
 
 //	Delete user from API
 app.delete('/api/:userId', (req, res, next) => {
 	var obj = users.find(function (obj) { return obj.id === parseInt(req.params.userId) });
-	var index = users.indexOf(obj);
-	users.splice(index, 1);
+	users.splice(users.indexOf(obj), 1);
 	res.end();
-})
+});
 
+
+
+// ----------------------------------------------------------------
 http.createServer(app).listen(3000, function () {
 	console.log('Express server listening on port 3000');
 });

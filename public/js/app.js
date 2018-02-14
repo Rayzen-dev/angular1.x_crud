@@ -8,7 +8,7 @@ app.controller('myCtrl', function($scope, $http) {
 		$http.get('/api')
 			.then(function(res) {
 				$scope.users = res.data;
-				console.log($scope.users);
+				console.log($scope);
 			}, function(error) {
 				console.log('Error: Can\'t access to API');
 			});
@@ -34,8 +34,20 @@ app.controller('myCtrl', function($scope, $http) {
 			})
 	}
 
-	$scope.update = function(id) {
-		// body...
+	$scope.editForm = function(obj, index) {
+		$scope.up = obj;
+		$scope.up.key = index;
+	}
+
+	$scope.update = function(obj) {
+		console.log(obj);
+		$http.put('/api/'+obj['id'], {data: obj})
+			.then(function(res) {
+				$scope.clear($scope.up);
+				$scope.load();
+			}, function(error) {
+				console.log(error);
+			});
 	}
 
 	$scope.clear = function(fields) {
