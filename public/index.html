@@ -3,75 +3,116 @@
 <head>
 	<title>{{ title }}</title>
 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
 	<script src="js/app.js"></script>
+
+	<style type="text/css">
+		#addUser {
+			margin-bottom: 2em;
+		}
+	</style>
 </head>
 <body>
-	<h1>{{ title }}</h1>
+	<div class="container">
+		<h1>{{ title }}</h1>
 
-	<table border="1">
-		<tr>
-			<td>ID</td>
-			<td><input type="number" name="id" ng-model="data.new.id"></td>
-		</tr>
-		<tr>
-			<td>Firstname</td>
-			<td><input type="text" name="firstname" ng-model="data.new.firstname"></td>
-		</tr>
-		<tr>
-			<td>Lastname</td>
-			<td><input type="text" name="lastname" ng-model="data.new.lastname"></td>
-		</tr>
-		<tr>
-			<td>Email</td>
-			<td><input type="text" name="email" ng-model="data.new.email"></td>
-		</tr>
-		<tr>
-			<td>Save</td>
-			<td><input type="button" name="save" value="Add" ng-click="save()"></td>
-		</tr>
-	</table>
+		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#createModal" id="addUser">Create user</button>
 
-	<table border="1">
-		<thead>
-			<tr>
-				<td>#</td>
-				<td>Firstname</td>
-				<td>Lastname</td>
-				<td>Email</td>
-				<td>Action</td>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="user in users">
-				<td>{{ user.id }}</td>
-				<td>{{ user.firstname }}</td>
-				<td>{{ user.lastname }}</td>
-				<td>{{ user.email }}</td>
-				<td><input type="button" name="edit" value="Update" ng-click="editForm(user, users.indexOf(user))"> - <input type="button" name="save" value="Delete" ng-click="delete(user.id)"></td>
-			</tr>
-		</tbody>
-	</table>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<td>#</td>
+					<td>Firstname</td>
+					<td>Lastname</td>
+					<td>Email</td>
+					<td>Action</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="user in users">
+					<td>{{ user.id }}</td>
+					<td>{{ user.firstname }}</td>
+					<td>{{ user.lastname }}</td>
+					<td>{{ user.email }}</td>
+					<td><input type="button" name="edit" value="Update" ng-click="editForm(user, users.indexOf(user))" class="btn btn-primary" data-toggle="modal" data-target="#updateModal"> - <input type="button" name="save" value="Delete" ng-click="delete(user.id)" class="btn btn-danger"></td>
+				</tr>
+			</tbody>
+		</table>
 
-	<table border="1">
-		<td hidden="true"><input type="number" name="id" ng-model="up.id"></td>
-		<tr>
-			<td>Firstname</td>
-			<td><input type="text" name="firstname" ng-model="up.firstname"></td>
-		</tr>
-		<tr>
-			<td>Lastname</td>
-			<td><input type="text" name="lastname" ng-model="up.lastname"></td>
-		</tr>
-		<tr>
-			<td>Email</td>
-			<td><input type="text" name="email" ng-model="up.email"></td>
-		</tr>
-		<tr>
-			<td>Update</td>
-			<td><input type="button" name="edit" value="Update" ng-click="update(up)"></td>
-		</tr>
-	</table>
+
+		<!-- CRUD Panel -->
+		<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">Create user</h4>
+					</div>
+					<div class="modal-body">
+						<table class="table">
+							<tr>
+								<td>ID</td>
+								<td><input type="number" class="form-control" name="id" ng-model="data.new.id"></td>
+							</tr>
+							<tr>
+								<td>Firstname</td>
+								<td><input type="text" class="form-control" name="firstname" ng-model="data.new.firstname"></td>
+							</tr>
+							<tr>
+								<td>Lastname</td>
+								<td><input type="text" class="form-control" name="lastname" ng-model="data.new.lastname"></td>
+							</tr>
+							<tr>
+								<td>Email</td>
+								<td><input type="text" class="form-control" name="email" ng-model="data.new.email"></td>
+							</tr>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="save()">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div> <!-- ./ Create panel -->
+
+		<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4>Update user</h4>
+					</div>
+					<div class="modal-mody">
+						<table class="table">
+							<td hidden="true"><input type="number" name="id" ng-model="up.id"></td>
+							<tr>
+								<td>Firstname</td>
+								<td><input type="text" class="form-control" name="firstname" ng-model="up.firstname"></td>
+							</tr>
+							<tr>
+								<td>Lastname</td>
+								<td><input type="text" class="form-control" name="lastname" ng-model="up.lastname"></td>
+							</tr>
+							<tr>
+								<td>Email</td>
+								<td><input type="text" class="form-control" name="email" ng-model="up.email"></td>
+							</tr>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="update(up)">Update</button>
+					</div>
+				</div>
+			</div>
+		</div> <!-- ./ Update panel -->
+
+	</div>
 </body>
 </html>
