@@ -8,20 +8,23 @@ app.controller('myCtrl', function($scope, $http) {
 		$http.get('/api')
 			.then(function(res) {
 				$scope.users = res.data;
-				console.log($scope);
 			}, function(error) {
 				console.log('Error: Can\'t access to API');
 			});
 	}
 
 	$scope.save = function() {
-		$http.post('/api', $scope.data.new)
-			.then(function(res) {
-				$scope.clear($scope.data.new);
-				$scope.load();
-			}, function(error) {
-				console.log(error);
-			})
+		if (typeof $scope.data == 'undefined' || !$scope.data.new.id || !$scope.data.new.firstname || !$scope.data.new.lastname || !$scope.data.new.email) {
+			alert('Missing some informations.');
+		} else {
+			$http.post('/api', $scope.data.new)
+				.then(function(res) {
+					$scope.clear($scope.data.new);
+					$scope.load();
+				}, function(error) {
+					console.log(error);
+				})
+		}
 	}
 
 	$scope.delete = function(id) {
@@ -40,14 +43,18 @@ app.controller('myCtrl', function($scope, $http) {
 	}
 
 	$scope.update = function(obj) {
-		console.log(obj);
-		$http.put('/api/'+obj['id'], {data: obj})
-			.then(function(res) {
-				$scope.clear($scope.up);
-				$scope.load();
-			}, function(error) {
-				console.log(error);
-			});
+		if (typeof obj == 'undefined' || obj['id'] != '' || $obj['firstname'] != '' || obj['lastname'] != '' || obj['email'] != '') {
+			$scope.load();
+			alert('Missing some informations.');
+		} else {
+			$http.put('/api/'+obj['id'], {data: obj})
+				.then(function(res) {
+					$scope.clear($scope.up);
+					$scope.load();
+				}, function(error) {
+					console.log(error);
+				});
+		}
 	}
 
 	$scope.clear = function(fields) {
