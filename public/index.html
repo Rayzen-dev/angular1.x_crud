@@ -28,7 +28,7 @@
 			<td><input type="text" name="email" ng-model="data.new.email"></td>
 		</tr>
 		<tr>
-			<td><input type="button" name="edit" value="Update"></td>
+			<td>Save</td>
 			<td><input type="button" name="save" value="Add" ng-click="save()"></td>
 		</tr>
 	</table>
@@ -49,9 +49,29 @@
 				<td>{{ user.firstname }}</td>
 				<td>{{ user.lastname }}</td>
 				<td>{{ user.email }}</td>
-				<td><input type="button" name="edit" value="Update"> - <input type="button" name="save" value="Delete" ng-click="delete(user.id)"></td>
+				<td><input type="button" name="edit" value="Update" ng-click="editForm(user, users.indexOf(user))"> - <input type="button" name="save" value="Delete" ng-click="delete(user.id)"></td>
 			</tr>
 		</tbody>
+	</table>
+
+	<table border="1">
+		<td hidden="true"><input type="number" name="id" ng-model="up.id"></td>
+		<tr>
+			<td>Firstname</td>
+			<td><input type="text" name="firstname" ng-model="up.firstname"></td>
+		</tr>
+		<tr>
+			<td>Lastname</td>
+			<td><input type="text" name="lastname" ng-model="up.lastname"></td>
+		</tr>
+		<tr>
+			<td>Email</td>
+			<td><input type="text" name="email" ng-model="up.email"></td>
+		</tr>
+		<tr>
+			<td>Update</td>
+			<td><input type="button" name="edit" value="Update" ng-click="update(up)"></td>
+		</tr>
 	</table>
 </body>
 </html>
